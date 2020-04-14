@@ -1,0 +1,42 @@
+.article {
+  display: flex;
+  justify-content: space-between;
+  border-bottom: 1px solid #e4e4e4;
+  padding: 10px 20px;
+}
+
+.article:last-of-type {
+  border-bottom: none;
+}
+
+.productTitle {
+  font-size: 18px;
+  margin-bottom: 5px;
+  font-weight: 500;
+  color: #353535;
+}
+
+.productImage {
+  margin-right: 20px;
+}
+
+.productMeta {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.productDescription {
+  font-size: 13px;
+  font-weight: 400;
+  color: #919191;
+  line-height: 1.5em;
+}
+
+.productPrice {
+  color: #353535;
+  font-size: 22px;
+  font-weight: 500;
+  margin-top: 15px;
+}

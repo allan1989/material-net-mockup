@@ -1,0 +1,12 @@
+.header{
+  background: linear-gradient(90deg,#353535 0,#515151 20%,#515151 46%,#353535);
+}
+
+.headerInner{
+  width: 1340px;
+  margin: 0 auto;
+}
+
+.headerLogo{
+  width: 22%;
+}

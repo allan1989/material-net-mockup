@@ -1,0 +1,22 @@
+.aside {
+  background-color: white;
+  width: 25%;
+  height: 100%;
+}
+
+.button {
+  color: white;
+  background-color:  #f46036;
+  border-radius: 5px;
+  cursor: pointer;
+  border: none;
+  font-size: 15px;
+  padding: 10px 15px;
+  display: block;
+  margin: auto;
+  transition: all .2s ease;
+}
+
+.button:hover {
+  background-color: #f2410f;
+}

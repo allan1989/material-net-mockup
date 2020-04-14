@@ -1,0 +1,43 @@
+.brandsContainer {
+  padding-bottom: 20px;
+}
+
+.brandsTitle {
+  color: white;
+  background-color: #353535;
+  padding: 7px 0 7px 12px;
+  border-left: 4px solid #f46036;
+  font-size: 13px;
+}
+
+.brandsList {
+  padding: 5px 10px 30px 10px;
+}
+
+.item {
+  display: flex;
+  padding: 0 10px 10px 0;
+}
+
+.input:checked ~ label::before{
+  content: "";
+  width: 13px;
+  height: 13px;
+  display: inline-block;
+  position: absolute;
+  left: -16px;
+  top: 3px;
+  background-color: #f46036;
+}
+
+.label {
+  display: inherit;
+  width: 100%;
+  cursor: pointer;
+  padding-left: 5px;
+  position: relative;
+}
+
+.name {
+  flex-grow: 1;
+}

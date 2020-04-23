@@ -6,7 +6,7 @@ import './select.css';
 
 export const Select = (props) =>{
   return(
-    <select onChange={(e) => props.onClick(e.target.value, props.objKey)} className='select'>
+    <select onChange={(e) => props.onClick(e.target.value)} className='select'>
       {
         Object.keys(options).map(option => {
           return (

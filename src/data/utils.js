@@ -6,14 +6,8 @@
 
 export const getUniqueValues = data => {
   let all = [];
-  let unique = [];
   data.forEach(el => all.push(el.brand));
-  for(let brand of all){
-    if(unique.indexOf(brand) === - 1){
-      unique.push(brand)
-    }
-  }
-  return unique
+  return all.filter((el, i) => all.indexOf(el) === i)
 }
 
 /**

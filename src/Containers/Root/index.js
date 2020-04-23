@@ -19,56 +19,66 @@ import './root.css';
 export class Root extends Component{
   constructor(props){
     super(props);
-    this.displayProducts = this.displayProducts.bind(this);
+    this.sortProducts = this.sortProducts.bind(this);
     this.setActiveBrandsFilter = this.setActiveBrandsFilter.bind(this);
     this.createFilters = this.createFilters.bind(this);
     this.filterByBrandAction = this.filterByBrandAction.bind(this);
+    this.setActiveSortCriteria = this.setActiveSortCriteria.bind(this);
     this.state = {
       products: [],
       filteredProducts: [],
+      activeSortCriteria: '',
       filters : {
         brands: []
       }
     }
   }
 
-  displayProducts(type, key){
+  sortProducts(arr, criteria){
     let sorted = [];
-    switch(type){
+    switch(criteria){
       case 'brand':
       case 'product':  
-        sorted = this.state[key].sort((a, b) => {
-          let aLowerCase = a[type].toLowerCase();
-          let bLowerCase = b[type].toLowerCase();
+        sorted = arr.sort((a, b) => {
+          let aLowerCase = a[criteria].toLowerCase();
+          let bLowerCase = b[criteria].toLowerCase();
           if(aLowerCase < bLowerCase) return -1;
           if(aLowerCase > bLowerCase) return 1;
           return 0;
         });
-        this.setState({[key]: sorted})
-        break;
+        return sorted;
+
         case 'priceAsc':
         case 'priceDesc':
-          sorted = this.state[key].sort((a,b) => {
+          sorted = arr.sort((a,b) => {
             let aVal = Number(a.price);
             let bVal = Number(b.price);
-            if(type === 'priceAsc'){
+            if(criteria === 'priceAsc'){
               if(aVal < bVal) return -1;
               if(aVal > bVal) return 1;
               return 0;
             }
-            if(type === 'priceDesc'){
+            if(criteria === 'priceDesc'){
               if(bVal < aVal) return -1;
               if(bVal > aVal) return 1;
               return 0;
             }
             return 0;
           })
-          this.setState({[key]: sorted})
-          break;
+          return sorted;
+    
         default:
           return this.state.products;
     }
   }
+
+  setActiveSortCriteria(criteria){
+    this.setState({
+      ...this.state,
+      activeSortCriteria: criteria
+    })
+  }
+
 
   createFilters(brands){
     let filters = {};
@@ -101,13 +111,13 @@ export class Root extends Component{
     }); 
     this.setState({
       ...this.state,
+      activeFilter: '',
       filteredProducts: filterArray(this.state.products, 'brand', activeFilters)
     })
   }
 
   componentDidMount(){
-    this.setState({products: data}, () => {
-      this.displayProducts('product', 'products');
+    this.setState({products: data, activeSortCriteria: 'product'}, () => {
       this.createFilters(brandsArrayUniqueValues);
     });    
   }
@@ -130,12 +140,12 @@ export class Root extends Component{
               />
           </Aside>
           <Main>
-            <Select onClick={this.displayProducts}
+            <Select onClick={this.setActiveSortCriteria}
                     objKey={this.state.filteredProducts.length === 0 ? 'products' : 'filteredProducts'}
             />
             <Products data={this.state.filteredProducts.length === 0 ? 
-              { products: this.state.products, key: 'products'} : 
-              { products: this.state.filteredProducts, key: 'filteredProducts'}
+              { products: this.sortProducts(this.state.products, this.state.activeSortCriteria), key: 'products', activeSortCriteria: this.state.activeSortCriteria} : 
+              { products: this.sortProducts(this.state.filteredProducts, this.state.activeSortCriteria), key: 'filteredProducts', activeSortCriteria: this.state.activeSortCriteria}
             }/>
           </Main>
         </Section>

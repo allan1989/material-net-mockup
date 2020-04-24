@@ -12,14 +12,13 @@ import { Select } from '../Select';
 import logo from '../../assets/site-logo-white.svg';
 import { data, brandsArrayUniqueValues } from '../../data';
 // Utils
-import { filterArray } from '../../data/utils';
+import { filterArray, sortProducts } from '../../data/utils';
 // Styles
 import './root.css';
 
 export class Root extends Component{
   constructor(props){
     super(props);
-    this.sortProducts = this.sortProducts.bind(this);
     this.setActiveBrandsFilter = this.setActiveBrandsFilter.bind(this);
     this.createFilters = this.createFilters.bind(this);
     this.filterByBrandAction = this.filterByBrandAction.bind(this);
@@ -34,51 +33,12 @@ export class Root extends Component{
     }
   }
 
-  sortProducts(arr, criteria){
-    let sorted = [];
-    switch(criteria){
-      case 'brand':
-      case 'product':  
-        sorted = arr.sort((a, b) => {
-          let aLowerCase = a[criteria].toLowerCase();
-          let bLowerCase = b[criteria].toLowerCase();
-          if(aLowerCase < bLowerCase) return -1;
-          if(aLowerCase > bLowerCase) return 1;
-          return 0;
-        });
-        return sorted;
-
-        case 'priceAsc':
-        case 'priceDesc':
-          sorted = arr.sort((a,b) => {
-            let aVal = Number(a.price);
-            let bVal = Number(b.price);
-            if(criteria === 'priceAsc'){
-              if(aVal < bVal) return -1;
-              if(aVal > bVal) return 1;
-              return 0;
-            }
-            if(criteria === 'priceDesc'){
-              if(bVal < aVal) return -1;
-              if(bVal > aVal) return 1;
-              return 0;
-            }
-            return 0;
-          })
-          return sorted;
-    
-        default:
-          return this.state.products;
-    }
-  }
-
   setActiveSortCriteria(criteria){
     this.setState({
       ...this.state,
       activeSortCriteria: criteria
     })
   }
-
 
   createFilters(brands){
     let filters = {};
@@ -144,8 +104,8 @@ export class Root extends Component{
                     objKey={this.state.filteredProducts.length === 0 ? 'products' : 'filteredProducts'}
             />
             <Products data={this.state.filteredProducts.length === 0 ? 
-              { products: this.sortProducts(this.state.products, this.state.activeSortCriteria), key: 'products', activeSortCriteria: this.state.activeSortCriteria} : 
-              { products: this.sortProducts(this.state.filteredProducts, this.state.activeSortCriteria), key: 'filteredProducts', activeSortCriteria: this.state.activeSortCriteria}
+              { products: sortProducts(this.state.products, this.state.activeSortCriteria), key: 'products'} : 
+              { products: sortProducts(this.state.filteredProducts, this.state.activeSortCriteria), key: 'filteredProducts'}
             }/>
           </Main>
         </Section>
